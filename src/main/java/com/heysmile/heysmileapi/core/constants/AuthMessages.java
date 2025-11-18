@@ -1,5 +1,6 @@
 package com.heysmile.heysmileapi.core.constants;
 
+
 public class AuthMessages {
 
     public static final String REGISTER_SUCCESS = "Registration successful.";
@@ -10,4 +11,5 @@ public class AuthMessages {
     public static final String PHONE_NUMBER_NOT_NULL = "Phone number cannot be null.";
     public static final String PASSWORD_NOT_NULL = "Password cannot be null.";
     public static final String EMAIL_INVALID = "Email format is invalid.";
+    public static final String LOGIN_SUCCESS = "Login successful.";
 }

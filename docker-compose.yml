@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  hey-smile-app:
+    container_name: hey-smile-app
+    restart: unless-stopped
+    build: .
+    depends_on:
+      - hey-smile-db
+    ports:
+      - 80:80
+    networks:
+      - nginx-network
+
+  hey-smile-db:
+    image: postgres:17
+    restart: unless-stopped
+    container_name: hey-smile-db
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: heySmileDB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - hey-smile-db-data:/var/lib/postgresql/data
+    networks:
+      - nginx-network
+
+volumes:
+  hey-smile-db-data:
+
+networks:
+  nginx-network:
+    external: true

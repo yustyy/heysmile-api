@@ -6,8 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -17,7 +22,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -47,4 +52,19 @@ public class User {
     @JoinColumn(name = "profile_image_id", referencedColumnName = "id")
     private Image profileImage;
 
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @JoinTable(name = "authorities", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Set<Role> authorities;
+
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
 }

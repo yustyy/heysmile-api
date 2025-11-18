@@ -2,9 +2,13 @@ package com.heysmile.heysmileapi.api.controllers;
 
 import com.heysmile.heysmileapi.business.abstracts.AuthService;
 import com.heysmile.heysmileapi.core.constants.AuthMessages;
+import com.heysmile.heysmileapi.core.utilities.results.DataResult;
 import com.heysmile.heysmileapi.core.utilities.results.Result;
+import com.heysmile.heysmileapi.core.utilities.results.SuccessDataResult;
 import com.heysmile.heysmileapi.core.utilities.results.SuccessResult;
+import com.heysmile.heysmileapi.dtos.auth.request.LoginRequestDto;
 import com.heysmile.heysmileapi.dtos.auth.request.RegisterRequestDto;
+import com.heysmile.heysmileapi.dtos.auth.response.LoginResponseDto;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -37,6 +41,12 @@ public class AuthController {
     ){
         authService.register(registerRequestDto, profilePhoto);
         return ResponseEntity.ok(new SuccessResult(AuthMessages.REGISTER_SUCCESS, HttpStatus.CREATED));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<DataResult<LoginResponseDto>> login(@RequestBody LoginRequestDto authLoginRequestDto){
+        var authLoginResponseDto = authService.login(authLoginRequestDto);
+        return ResponseEntity.ok(new SuccessDataResult<>(authLoginResponseDto, AuthMessages.LOGIN_SUCCESS, HttpStatus.OK));
     }
 
 
