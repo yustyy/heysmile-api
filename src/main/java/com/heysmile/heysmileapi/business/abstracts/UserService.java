@@ -13,4 +13,7 @@ public interface UserService extends UserDetailsService {
     boolean checkIfUserExistsByMail(String email);
 
 
+    User getAuthenticatedUserEntity();
+
+
 }

@@ -4,9 +4,13 @@ import com.heysmile.heysmileapi.business.abstracts.UserService;
 import com.heysmile.heysmileapi.core.exceptions.NotFoundException;
 import com.heysmile.heysmileapi.dataAccess.UserDao;
 import com.heysmile.heysmileapi.entities.User;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 
 @Service
 public class UserManager implements UserService {
@@ -31,6 +35,16 @@ public class UserManager implements UserService {
     @Override
     public boolean checkIfUserExistsByMail(String email) {
         return userDao.existsByEmail(email);
+    }
+
+    @Override
+    public User getAuthenticatedUserEntity() {
+       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+       if (authentication.getPrincipal().equals("anonymousUser")) {
+           throw new RuntimeException("User not found");
+       }
+
+       return getByEmail(authentication.getName());
     }
 
     @Override
