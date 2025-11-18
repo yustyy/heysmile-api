@@ -66,6 +66,12 @@ public class ImageManager implements ImageService {
         return imageDao.findByUrl(url).orElseThrow(() -> new NotFoundException("Image not found"));
     }
 
+    @Override
+    public byte[] getImageDataByUrl(String url) {
+        Image image = getImageByUrl(url);
+        return image.getData();
+    }
+
     private String generateUrl() {
         SecureRandom secureRandom = new SecureRandom();
         byte[] randomBytes = new byte[128];

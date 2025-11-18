@@ -3,14 +3,17 @@ package com.heysmile.heysmileapi.business.concretes;
 import com.heysmile.heysmileapi.business.abstracts.UserService;
 import com.heysmile.heysmileapi.core.exceptions.NotFoundException;
 import com.heysmile.heysmileapi.dataAccess.UserDao;
+import com.heysmile.heysmileapi.dtos.user.response.MeResponseDto;
 import com.heysmile.heysmileapi.entities.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
+import java.util.Set;
 
 @Service
 public class UserManager implements UserService {
@@ -45,6 +48,24 @@ public class UserManager implements UserService {
        }
 
        return getByEmail(authentication.getName());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public MeResponseDto getAuthenticatedUser() {
+        User user = getAuthenticatedUserEntity();
+
+        MeResponseDto meResponseDto = new MeResponseDto();
+        meResponseDto.setId(user.getId());
+        meResponseDto.setFirstName(user.getFirstName());
+        meResponseDto.setLastName(user.getLastName());
+        meResponseDto.setEmail(user.getEmail());
+        meResponseDto.setPhoneNumber(user.getPhoneNumber());
+        meResponseDto.setDateOfBirth(user.getDateOfBirth());
+        if (user.getProfileImage() != null){
+            meResponseDto.setProfileImageUrl("https://hey-smile-api.yusufacmaci.com/api/images/+"+user.getProfileImage().getUrl());
+        }
+        return meResponseDto;
     }
 
     @Override

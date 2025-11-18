@@ -16,4 +16,6 @@ public interface ImageService {
     void deleteImage(UUID id);
 
     Image getImageByUrl(String url);
+
+    byte[] getImageDataByUrl(String url);
 }

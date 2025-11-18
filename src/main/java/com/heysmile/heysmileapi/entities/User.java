@@ -48,7 +48,7 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "profile_image_id", referencedColumnName = "id")
     private Image profileImage;
 

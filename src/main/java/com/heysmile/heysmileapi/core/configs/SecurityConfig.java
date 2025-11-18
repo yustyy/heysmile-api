@@ -40,7 +40,10 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(x ->
-                      x.anyRequest().permitAll()
+                      x
+                              .requestMatchers("/api/auth/**").permitAll()
+                              .requestMatchers(HttpMethod.GET, "/api/images/**").permitAll()
+                              .requestMatchers(HttpMethod.GET, "/api/users/me").hasAnyRole("USER", "ADMIN", "DOCTOR")
 
                 )
                 .sessionManagement(x -> x.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

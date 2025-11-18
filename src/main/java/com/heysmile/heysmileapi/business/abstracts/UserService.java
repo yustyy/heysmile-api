@@ -1,5 +1,6 @@
 package com.heysmile.heysmileapi.business.abstracts;
 
+import com.heysmile.heysmileapi.dtos.user.response.MeResponseDto;
 import com.heysmile.heysmileapi.entities.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -14,6 +15,9 @@ public interface UserService extends UserDetailsService {
 
 
     User getAuthenticatedUserEntity();
+
+
+    MeResponseDto getAuthenticatedUser();
 
 
 }

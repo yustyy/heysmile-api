@@ -23,6 +23,7 @@ public class Image {
     @JsonIgnore
     @Lob
     @Column(name = "data")
+    @Basic(fetch = FetchType.LAZY)
     private byte[] data;
 
     @Column(name = "name")
