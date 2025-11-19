@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -31,7 +32,7 @@ public class Calendar {
     private CalendarCategory category;
 
     @Column(name = "date", nullable = false)
-    private LocalDateTime date;
+    private LocalDate date;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reminder_id")
