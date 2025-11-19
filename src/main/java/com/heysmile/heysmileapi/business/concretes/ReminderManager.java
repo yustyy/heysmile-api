@@ -57,11 +57,13 @@ public class ReminderManager implements ReminderService {
         responseDto.setId(savedReminder.getId());
         responseDto.setTitle(savedReminder.getTitle());
         responseDto.setContent(savedReminder.getContent());
+        responseDto.setDate(savedReminder.getCalendar().getDate());
         return responseDto;
 
     }
 
     @Override
+    @Transactional
     public List<GetReminderResponseDto> getRemindersForAuthenticatedUser() {
         var authenticatedUserReference = userService.getAuthenticatedUserReference();
 
@@ -72,6 +74,7 @@ public class ReminderManager implements ReminderService {
                     reminder.setId(x.getId());
                     reminder.setTitle(x.getTitle());
                     reminder.setContent(x.getContent());
+                    reminder.setDate(x.getCalendar().getDate());
                     return reminder;
                 })
                 .toList();
