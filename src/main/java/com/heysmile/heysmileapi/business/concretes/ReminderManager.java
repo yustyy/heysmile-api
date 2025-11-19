@@ -38,7 +38,6 @@ public class ReminderManager implements ReminderService {
     public CreateReminderResponseDto createReminder(CreateReminderRequestDto createReminderRequestDto) {
         var authenticatedUserReference = userService.getAuthenticatedUserReference();
 
-
         Reminder reminder = new Reminder();
         reminder.setTitle(createReminderRequestDto.getTitle() != null ? createReminderRequestDto.getTitle() : null);
         reminder.setContent(createReminderRequestDto.getContent());
@@ -49,6 +48,8 @@ public class ReminderManager implements ReminderService {
         calendar.setCategory(CalendarCategory.REMINDER);
         calendar.setDate(createReminderRequestDto.getDate());
         calendar.setReminder(reminder);
+
+        reminder.setCalendar(calendar);
 
         calendarService.createCalendar(calendar);
 
