@@ -89,9 +89,12 @@ public class ReminderManager implements ReminderService {
 
         Calendar calendar = reminder.getCalendar();
 
+        /*
         if (calendar.getUser().getId().equals(userService.getAuthenticatedUserReference().getId())) {
             throw new NotFoundException("this reminder is not yours");
         }
+
+         */
 
         reminderDao.delete(reminder);
     }
