@@ -2,6 +2,7 @@ package com.heysmile.heysmileapi.api.controllers;
 
 import com.heysmile.heysmileapi.business.abstracts.ReminderService;
 import com.heysmile.heysmileapi.core.utilities.results.SuccessDataResult;
+import com.heysmile.heysmileapi.core.utilities.results.SuccessResult;
 import com.heysmile.heysmileapi.dtos.reminder.request.CreateReminderRequestDto;
 import com.heysmile.heysmileapi.dtos.reminder.response.CreateReminderResponseDto;
 import com.heysmile.heysmileapi.dtos.reminder.response.GetReminderResponseDto;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/api/reminders")
@@ -44,6 +46,16 @@ public class ReminderController {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new SuccessDataResult<>(result, "Reminders retrieved successfully", HttpStatus.OK));
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<SuccessResult> deleteReminder(@PathVariable UUID id) {
+
+        reminderService.deleteReminder(id);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new SuccessResult("Reminder deleted successfully", HttpStatus.OK));
 
     }
 }

@@ -16,6 +16,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -78,6 +79,15 @@ public class ReminderManager implements ReminderService {
                     return reminder;
                 })
                 .toList();
+    }
+
+    @Override
+    public void deleteReminder(UUID id) {
+        Reminder reminder = reminderDao.findById(id)
+                .orElseThrow(() -> new NotFoundException("Reminder not found"));
+
+        calendarService.deleteCalendar(reminder.getCalendar().getId());
+        reminderDao.delete(reminder);
     }
 
 }

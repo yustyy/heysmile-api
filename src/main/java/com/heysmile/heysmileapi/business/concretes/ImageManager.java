@@ -6,6 +6,7 @@ import com.heysmile.heysmileapi.core.exceptions.NotFoundException;
 import com.heysmile.heysmileapi.dataAccess.ImageDao;
 import com.heysmile.heysmileapi.entities.Image;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.SecureRandom;
@@ -62,11 +63,13 @@ public class ImageManager implements ImageService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Image getImageByUrl(String url) {
         return imageDao.findByUrl(url).orElseThrow(() -> new NotFoundException("Image not found"));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public byte[] getImageDataByUrl(String url) {
         Image image = getImageByUrl(url);
         return image.getData();

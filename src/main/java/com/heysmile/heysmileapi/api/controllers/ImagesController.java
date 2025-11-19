@@ -1,6 +1,10 @@
 package com.heysmile.heysmileapi.api.controllers;
 
 import com.heysmile.heysmileapi.business.abstracts.ImageService;
+import com.heysmile.heysmileapi.entities.Image;
+import org.springframework.http.MediaType;
+import org.springframework.http.MediaTypeFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,7 +20,16 @@ public class ImagesController {
 
 
     @GetMapping("/{url}")
-    public byte[] getImageDataByUrl(@PathVariable String url){
-        return imageService.getImageDataByUrl(url);
+    public ResponseEntity<byte[]> getImageDataByUrl(@PathVariable String url){
+        Image imageData = imageService.getImageByUrl(url);
+
+        MediaType mediaType = MediaTypeFactory
+                .getMediaType(imageData.getName())
+                .orElse(MediaType.IMAGE_PNG);
+
+        return ResponseEntity
+                .ok()
+                .contentType(mediaType)
+                .body(imageData.getData());
     }
 }
