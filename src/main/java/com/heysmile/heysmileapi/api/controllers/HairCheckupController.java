@@ -5,6 +5,7 @@ import com.heysmile.heysmileapi.core.utilities.results.SuccessDataResult;
 import com.heysmile.heysmileapi.dtos.haircheckup.request.CreateHairCheckupRequestDto;
 import com.heysmile.heysmileapi.dtos.haircheckup.response.HairCheckupResponseDto;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,17 +25,26 @@ public class HairCheckupController {
     }
 
 
-    @PostMapping("/")
-    public ResponseEntity<SuccessDataResult> createHairCheckup(@RequestBody CreateHairCheckupRequestDto createHairCheckupRequestDto,
-                                                               MultipartFile imageFront,
-                                                               MultipartFile imageBack,
-                                                               MultipartFile imageLeft,
-                                                               MultipartFile imageRight,
-                                                               MultipartFile imageTop) throws IOException{
-        var result = hairCheckupService.createCheckup(imageFront, imageBack, imageLeft, imageRight, imageTop, createHairCheckupRequestDto.getUserNotes());
+    @PostMapping(
+            value = "/",
+            consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }
+    )
+    public ResponseEntity<SuccessDataResult> createHairCheckup(
+            @RequestPart("hairCheckup") CreateHairCheckupRequestDto createHairCheckupRequestDto,
+            @RequestPart(value = "imageFront", required = false) MultipartFile imageFront,
+            @RequestPart(value = "imageBack", required = false) MultipartFile imageBack,
+            @RequestPart(value = "imageLeft", required = false) MultipartFile imageLeft,
+            @RequestPart(value = "imageRight", required = false) MultipartFile imageRight,
+            @RequestPart(value = "imageTop", required = false) MultipartFile imageTop
+    ) throws IOException {
 
+        var result = hairCheckupService.createCheckup(
+                imageFront, imageBack, imageLeft, imageRight, imageTop,
+                createHairCheckupRequestDto.getUserNotes()
+        );
 
-        return ResponseEntity.status(201).body(new SuccessDataResult(result, "Hair checkup created successfully", HttpStatus.CREATED));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new SuccessDataResult(result, "Hair checkup created successfully", HttpStatus.CREATED));
     }
 
 
