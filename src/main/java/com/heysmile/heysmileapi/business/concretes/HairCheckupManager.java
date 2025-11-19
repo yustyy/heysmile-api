@@ -89,6 +89,7 @@ public class HairCheckupManager implements HairCheckupService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<HairCheckupResponseDto> getAuthenticatedUserCheckups() {
         var userReference = userService.getAuthenticatedUserReference();
         var checkups = hairCheckupDao.findAllByUser(userReference);
