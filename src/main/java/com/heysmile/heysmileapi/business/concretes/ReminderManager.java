@@ -86,7 +86,11 @@ public class ReminderManager implements ReminderService {
         Reminder reminder = reminderDao.findById(id)
                 .orElseThrow(() -> new NotFoundException("Reminder not found"));
 
-        calendarService.deleteCalendar(reminder.getCalendar().getId());
+        Calendar calendar = reminder.getCalendar();
+        if (calendar != null && calendar.getId() != null) {
+            calendarService.deleteCalendar(calendar.getId());
+        }
+
         reminderDao.delete(reminder);
     }
 

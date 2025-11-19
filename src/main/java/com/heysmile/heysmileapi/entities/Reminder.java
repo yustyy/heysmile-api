@@ -27,7 +27,7 @@ public class Reminder {
     @Column(name = "content")
     private String content;
 
-    @OneToOne(mappedBy = "reminder", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "reminder", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Calendar calendar;
 
 

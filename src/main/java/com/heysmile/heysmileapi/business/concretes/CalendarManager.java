@@ -36,6 +36,7 @@ public class CalendarManager implements CalendarService {
 
 
     @Override
+    @Transactional
     public void deleteCalendar(UUID id) {
         calendarDao.deleteById(id);
     }
