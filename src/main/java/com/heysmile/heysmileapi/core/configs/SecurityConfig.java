@@ -43,7 +43,17 @@ public class SecurityConfig {
                       x
                               .requestMatchers("/api/auth/**").permitAll()
                               .requestMatchers(HttpMethod.GET, "/api/images/**").permitAll()
-                              .requestMatchers(HttpMethod.GET, "/api/users/me").hasAnyRole("USER", "ADMIN", "DOCTOR")
+                              .requestMatchers(HttpMethod.GET, "/api/treatments/**").permitAll()
+
+                              .requestMatchers("/api/calendars/**").hasAnyRole("USER", "ADMIN", "DOCTOR")
+                              .requestMatchers("/api/hair-checkups/**").hasAnyRole("USER", "ADMIN", "DOCTOR")
+                              .requestMatchers("/api/reminders/**").hasAnyRole("USER", "ADMIN", "DOCTOR")
+                              .requestMatchers("/api/users/**").hasAnyRole("USER", "ADMIN", "DOCTOR")
+
+                              .requestMatchers(HttpMethod.POST, "/api/reminders/").hasAnyRole("USER", "ADMIN", "DOCTOR")
+                              .requestMatchers(HttpMethod.GET, "/api/reminders/").hasAnyRole("USER", "ADMIN", "DOCTOR")
+
+                              .anyRequest().authenticated()
 
                 )
                 .sessionManagement(x -> x.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

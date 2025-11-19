@@ -69,6 +69,12 @@ public class UserManager implements UserService {
     }
 
     @Override
+    public User getAuthenticatedUserReference() {
+        User user = getAuthenticatedUserEntity();
+        return userDao.getReferenceById(user.getId());
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userDao.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }

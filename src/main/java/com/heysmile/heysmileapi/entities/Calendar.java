@@ -33,15 +33,15 @@ public class Calendar {
     @Column(name = "date", nullable = false)
     private LocalDateTime date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reminder_id")
     private Reminder reminder;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "treatment_id")
     private Treatment treatment;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hair_checkup_id")
     private HairCheckup hairCheckup;
 

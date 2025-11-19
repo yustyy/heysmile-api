@@ -21,8 +21,14 @@ public class Reminder {
     @Column(name = "id", nullable = false, updatable = false)
     private UUID id;
 
-    @Column(name = "text")
-    private String text;
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "content")
+    private String content;
+
+    @OneToOne(mappedBy = "reminder", fetch = FetchType.LAZY)
+    private Calendar calendar;
 
 
 }

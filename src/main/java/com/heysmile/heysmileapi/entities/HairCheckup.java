@@ -59,6 +59,9 @@ public class HairCheckup {
     @Column(name = "graft")
     private int graft;
 
+    @OneToOne(mappedBy = "hairCheckup", fetch = FetchType.LAZY)
+    private Calendar calendar;
+
 
 
 }

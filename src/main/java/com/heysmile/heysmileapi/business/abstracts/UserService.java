@@ -19,5 +19,7 @@ public interface UserService extends UserDetailsService {
 
     MeResponseDto getAuthenticatedUser();
 
+    User getAuthenticatedUserReference();
+
 
 }

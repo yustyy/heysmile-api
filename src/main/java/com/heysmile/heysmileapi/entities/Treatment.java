@@ -30,5 +30,8 @@ public class Treatment {
     @Column(name = "page_url")
     private String pageUrl;
 
+    @OneToOne(mappedBy = "treatment", fetch = FetchType.LAZY)
+    private Calendar calendar;
+
 
 }
