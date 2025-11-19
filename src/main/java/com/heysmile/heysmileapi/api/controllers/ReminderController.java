@@ -24,8 +24,6 @@ public class ReminderController {
 
 
 
-
-
     @PostMapping("/")
     public ResponseEntity<SuccessDataResult<CreateReminderResponseDto>> createReminder(@RequestBody CreateReminderRequestDto createReminderRequestDto){
 
