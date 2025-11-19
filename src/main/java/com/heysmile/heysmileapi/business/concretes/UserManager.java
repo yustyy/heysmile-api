@@ -63,7 +63,7 @@ public class UserManager implements UserService {
         meResponseDto.setPhoneNumber(user.getPhoneNumber());
         meResponseDto.setDateOfBirth(user.getDateOfBirth());
         if (user.getProfileImage() != null){
-            meResponseDto.setProfileImageUrl("https://hey-smile-api.yusufacmaci.com/api/images/+"+user.getProfileImage().getUrl());
+            meResponseDto.setProfileImageUrl("https://hey-smile-api.yusufacmaci.com/api/images/"+user.getProfileImage().getUrl());
         }
         return meResponseDto;
     }
