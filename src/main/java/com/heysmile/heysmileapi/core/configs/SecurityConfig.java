@@ -53,6 +53,9 @@ public class SecurityConfig {
                               .requestMatchers(HttpMethod.POST, "/api/reminders/").hasAnyRole("USER", "ADMIN", "DOCTOR")
                               .requestMatchers(HttpMethod.GET, "/api/reminders/").hasAnyRole("USER", "ADMIN", "DOCTOR")
 
+                              .requestMatchers(HttpMethod.POST, "/api/hair-checkups/").hasAnyRole("USER", "ADMIN", "DOCTOR")
+                              .requestMatchers(HttpMethod.GET, "/api/hair-checkups/me").hasAnyRole("USER", "ADMIN", "DOCTOR")
+
                               .anyRequest().authenticated()
 
                 )
